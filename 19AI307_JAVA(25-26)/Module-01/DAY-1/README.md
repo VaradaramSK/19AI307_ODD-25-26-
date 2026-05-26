@@ -42,7 +42,7 @@ Write a java program to get name from the user (String) and print it.
 /*
 Program to implement variables and Operators using Java
 Developed by: Varadaram SK
-RegisterNumber:  2122223040232
+RegisterNumber:  212223040232
 */
 ```
 

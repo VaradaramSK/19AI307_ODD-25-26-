@@ -26,7 +26,7 @@ To create a class Course with attributes code, title, credits.
 /*
 Program to implement a Class and Objects using Java
 Developed by: Varadaram SK
-RegisterNumber:  212223040091
+RegisterNumber:  212223040232
 */
 ```
 

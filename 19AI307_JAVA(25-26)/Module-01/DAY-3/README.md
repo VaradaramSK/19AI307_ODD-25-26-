@@ -34,7 +34,7 @@ To write a program to Sum of Prime Numbers up to N
 /*
 Program to implement a Looping Statement using Java
 Developed by: Varadaram SK
-RegisterNumber:  2122223040232
+RegisterNumber:  212223040232
 */
 ```
 

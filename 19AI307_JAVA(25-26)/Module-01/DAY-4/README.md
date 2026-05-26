@@ -30,7 +30,7 @@ To write a program to find the maximum odd number in an array.
 /*
 Program to implement a Array concept using Java
 Developed by: Varadaram SK
-RegisterNumber:  2122223040232
+RegisterNumber:  212223040232
 */
 ```
 

@@ -1,24 +1,23 @@
-# Ex.No:3(A) INHERITANCE AND AGGREGATION
+# Ex.No:3(C) ABSTRACTION
 
 ## QUESTION:
-A jewelry store tracks gold rates for different types of customers. The base class is Customer with attributes like customerId, name, and purchaseWeight (in grams). There are two types of customers: RegularCustomer and PremiumCustomer. RegularCustomer gets a fixed discount of 2% on the gold rate per gram. PremiumCustomer gets a 5% discount plus a special cashback. The base gold rate per gram is input at runtime. For each customer, calculate the final price they pay:
-
-finalPrice = purchaseWeight * (goldRatePerGram - discount)
-
-For PremiumCustomer, additionally show cashback amount (which is 1% of the final price).
+Create abstract class GameScore with method finalScore().
+Subclasses:
+ArcadeGame: score = baseScore + (level × 100)
+PuzzleGame: score = (attempts ≤ 3) ? 1000 - (attempts × 100) : 500
 
 ## AIM:
 
-To develop a Java program using inheritance where a base class Customer stores common customer details and derived classes RegularCustomer and PremiumCustomer apply different discount rules.
+To Create abstract class GameScore with method finalScore().
+
 ## ALGORITHM :
 1.	Start the program.
 2.	Import the necessary package 'java.util'
-3.	read the customer details: type, ID, name, purchase weight, and gold rate per gram.
-4.	Based on the customer type (General / Regular / Premium), create the appropriate object using inheritance.
-5.	Use the class’s getDiscountRate() method to determine the discount and compute the final price using:
-6.	finalPrice = purchaseWeight × (goldRatePerGram − discountAmount)
-7.	If the customer is Premium, also calculate cashback = 1% of finalPrice.
-8.	Call the display() method to print the customer details, discount, final price (and cashback if applicable), then stop.
+3.	Based on the game type, create the corresponding object:ArcadeGame then read base score and level ,PuzzleGame then read number of attempts.
+4.	Through runtime polymorphism, call the overridden method finalScore() of the respective game class.
+5.	Compute the score based on game rules:ArcadeGame: baseScore + (level × 100)
+6.	PuzzleGame: if attempts ≤ 3 → 1000 − attempts × 100; else → 500
+7.	Print the final score and stop.
 
 
 
@@ -27,124 +26,72 @@ To develop a Java program using inheritance where a base class Customer stores c
 ## PROGRAM:
  ```
 /*
-Program to implement a Inheritance and Aggregation using Java
+Program to implement a Abstraction using Java
 Developed by: Varadaram SK
 RegisterNumber:  212223040232
 */
 ```
 
 ```
-import java.util.Scanner;
-import java.text.DecimalFormat;
+import java.util.*;
 
-class Customer {
-    String customerId, name;
-    double purchaseWeight, goldRatePerGram;
+abstract class GameScore {
+    abstract int finalScore();
+}
 
-    Customer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
-        this.customerId = customerId;
-        this.name = name;
-        this.purchaseWeight = purchaseWeight;
-        this.goldRatePerGram = goldRatePerGram;
+class ArcadeGame extends GameScore {
+    private int baseScore;
+    private int level;
+
+    public ArcadeGame(int baseScore, int level) {
+        this.baseScore = baseScore;
+        this.level = level;
     }
 
-    double getDiscountRate() {
-        return 0;
-    }
-
-    double calculateFinalPrice() {
-        double discountAmount = goldRatePerGram * getDiscountRate() / 100;
-        double effectiveRate = goldRatePerGram - discountAmount;
-        return purchaseWeight * effectiveRate;
-    }
-
-    void display() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Name: " + name);
-        System.out.println("Customer Type: General");
-        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
-        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
-        System.out.println("Discount: " + (int)getDiscountRate() + "%");
-        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+    @Override
+    int finalScore() {
+        return baseScore + (level * 100);
     }
 }
 
-class RegularCustomer extends Customer {
-    RegularCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
-        super(customerId, name, purchaseWeight, goldRatePerGram);
+class PuzzleGame extends GameScore {
+    private int attempts;
+
+    public PuzzleGame(int attempts) {
+        this.attempts = attempts;
     }
 
     @Override
-    double getDiscountRate() {
-        return 2;
-    }
-
-    @Override
-    void display() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Name: " + name);
-        System.out.println("Customer Type: Regular");
-        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
-        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
-        System.out.println("Discount: " + (int)getDiscountRate() + "%");
-        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+    int finalScore() {
+        if (attempts <= 3) {
+            return 1000 - (attempts * 100);
+        } else {
+            return 500;
+        }
     }
 }
 
-class PremiumCustomer extends Customer {
-    PremiumCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
-        super(customerId, name, purchaseWeight, goldRatePerGram);
-    }
-
-    @Override
-    double getDiscountRate() {
-        return 5;
-    }
-
-    double calculateCashback() {
-        return calculateFinalPrice() * 0.01;
-    }
-
-    @Override
-    void display() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Name: " + name);
-        System.out.println("Customer Type: Premium");
-        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
-        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
-        System.out.println("Discount: " + (int)getDiscountRate() + "%");
-        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
-        System.out.println("Cashback: " + df.format(calculateCashback()));
-    }
-}
-
-public class Main {
+public class GameScoreCalculator {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        while (sc.hasNext()) {
-            String type = sc.next();
-            if (!sc.hasNext()) break; 
-            String id = sc.next();
-            String name = sc.next();
-            double weight = sc.nextDouble();
-            double goldRate = sc.nextDouble();
-
-            Customer c;
-            if (type.equalsIgnoreCase("Regular")) {
-                c = new RegularCustomer(id, name, weight, goldRate);
-            } else if (type.equalsIgnoreCase("Premium")) {
-                c = new PremiumCustomer(id, name, weight, goldRate);
-            } else {
-                c = new Customer(id, name, weight, goldRate);
-            }
-
-            c.display();
+        
+        int gameType = sc.nextInt(); 
+        
+        GameScore game;
+        if (gameType == 1) {
+            int base = sc.nextInt();
+            int level = sc.nextInt();
+            game = new ArcadeGame(base, level);
+        } else if (gameType == 2) {
+            int attempts = sc.nextInt();
+            game = new PuzzleGame(attempts);
+        } else {
+            System.out.println("Invalid game type!");
+            sc.close();
+            return;
         }
-
+        
+        System.out.println(game.finalScore());
         sc.close();
     }
 }
@@ -157,9 +104,10 @@ public class Main {
 
 ## OUTPUT:
 
-<img width="877" height="757" alt="image" src="https://github.com/user-attachments/assets/9294b113-8cf2-49cc-95f7-44755a989cc6" />
+<img width="452" height="316" alt="image" src="https://github.com/user-attachments/assets/d8e30677-32f8-4a37-88de-766429b19c4d" />
 
 
 ## RESULT:
 
-Thus the program is executed successfully.
+Thus, the program to create abstract class GameScore with method finalScore() executed successfully.
+

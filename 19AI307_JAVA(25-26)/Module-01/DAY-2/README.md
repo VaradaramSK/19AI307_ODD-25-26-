@@ -48,7 +48,7 @@ To write a program that accepts the age, distance, and travel class (1 for Sleep
 /*
 Program to implement a conditional statement using Java
 Developed by: Varadaram SK
-RegisterNumber:  2122223040232
+RegisterNumber:  212223040232
 */
 ```
 

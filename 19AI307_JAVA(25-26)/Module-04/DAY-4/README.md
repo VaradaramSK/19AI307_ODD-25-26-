@@ -1,17 +1,22 @@
-# Ex.No:4(A) EXCEPTION HANDLING
+# Ex.No:4(D) DESIGN PATTERN -- ABSTRACT FACTORY
 
 ## QUESTION:
-If an Integer object is set to null, and you attempt to call .toString() on it, what happens? How can you prevent your code from throwing an exception in such cases?
+
+Create a program that loads an operating system shell using the Factory Pattern. Based on user input, return a shell object: windows, linux, mac.
+
 
 ## AIM:
-To understand what happens when calling a method (such as .toString()) on a null Integer object, and to learn how to prevent NullPointerException by using null checks or safe handling techniques in Java.
+
+To create a program that loads an operating system shell using the Factory Pattern. Based on user input, return a shell object: windows, linux, mac.
+
+
 ## ALGORITHM :
 1.	Start the program.
 2.	Import the necessary package 'java.util'
-3.	If the input is 0, assign null to the Integer object num; otherwise, store the input value in num.
-4.	Check whether num is null.
-5.	If num is null, print "Null Integer"; otherwise, print the value of num.
-6.	Stop the program.
+3.	Read the OS name from the user.
+4.	Use OSFactory.getOS() to create the appropriate OS object based on the input.
+5.	If a valid OS object is returned, call its loadShell() method.
+6.	If the input does not match any OS type, display "Invalid OS" message.
 
 
 
@@ -20,24 +25,65 @@ To understand what happens when calling a method (such as .toString()) on a null
 ## PROGRAM:
  ```
 /*
-Program to implement a Exception Handling using Java
+Program to implement a Abstract Factory Pattern using Java
 Developed by: Varadaram SK
 RegisterNumber:  212223040232
 */
 ```
 
 ```
-import java.util.*;
+import java.util.Scanner;
 
-public class NullPointerExample {
+interface OperatingSystem {
+    void loadShell();
+}
+
+
+class Windows implements OperatingSystem {
+    public void loadShell() {
+        System.out.println("Loading Windows Shell...");
+    }
+}
+
+class Linux implements OperatingSystem {
+    public void loadShell() {
+        System.out.println("Loading Linux Shell...");
+    }
+}
+
+class Mac implements OperatingSystem {
+    public void loadShell() {
+        System.out.println("Loading Mac Shell...");
+    }
+}
+
+class OSFactory {
+    public static OperatingSystem getOS(String type) {
+        if (type.equals("Windows")) {
+            return new Windows();
+        } else if (type.equals("Linux")) {
+            return new Linux();
+        } else if (type.equals("Mac")) {
+            return new Mac();
+        } else {
+            return null; 
+        }
+    }
+}
+
+public class ShellLoader {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int input = sc.nextInt(); 
+       
+        String input = sc.nextLine();
 
-        Integer num = (input == 0) ? null : input;
+        OperatingSystem os = OSFactory.getOS(input);
 
-     
-        System.out.println((num == null) ? "Null Integer" : num);
+        if (os != null) {
+            os.loadShell();
+        } else {
+            System.out.println("Invalid OS: " + input);
+        }
 
         sc.close();
     }
@@ -51,9 +97,9 @@ public class NullPointerExample {
 
 ## OUTPUT:
 
-<img width="500" height="302" alt="image" src="https://github.com/user-attachments/assets/170cecf7-6fca-4b97-8b9b-6ab8b96ca87f" />
+<img width="673" height="418" alt="image" src="https://github.com/user-attachments/assets/3837199b-482d-4131-bd9f-7ea89a7d59c7" />
 
 
 ## RESULT:
 
-Thus the program to check if an Integer object is set to null, and you attempt to call .toString() on it is executed successfully.
+Thus, the program to loads an operating system shell using the Factory Pattern is executed successfully.
